@@ -14,9 +14,8 @@ Un logiciel de chat d'entreprise pour développeurs:
 ##Architecture de base des données
 Afin de réaliser ce logiciel, il doit d'abord créer une base des données pour sauvegarder les données utiles et en utilisant ces données pour contrôler le système.
 
-| Room |[id_room] INTEGER,[room_name] text,[room_type] text)|
-| :------------: | :------------: |
-| User |[id_user] INTEGER,[user_name] text,[user_role] integer,[user_rights] integer,[user_password] text)|
+| Room | :------------: |[id_room] INTEGER,[room_name] text,[room_type] text)|
+| User | :------------: |[id_user] INTEGER,[user_name] text,[user_role] integer,[user_rights] integer,[user_password] text)|
 
 ##Système d'authentification
 - Nous avons besoin de vérifiez que le mot de passe a un numéro, un caractère spécial, une longueur> 8.
