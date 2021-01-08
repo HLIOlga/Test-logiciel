@@ -2,7 +2,8 @@
 _**Projet de Test Logiciel
 Author : Huiling BAO & Heyang LI**_
 
-##Introduction général
+Introduction général
+--
 Un logiciel de chat d'entreprise pour développeurs:
 - Pourra être exécuté dans un terminal
 - Devra avoir un système d’authentification
@@ -11,13 +12,15 @@ Un logiciel de chat d'entreprise pour développeurs:
 - Il n’y aura probablement pas plus de 20 personnes par salle
 - Côté architecture, les ressources sont limitées mais un serveur pourra être mis à disposition
 
-##Architecture de base des données
+Architecture de base des données
+--
 Afin de réaliser ce logiciel, il doit d'abord créer une base des données pour sauvegarder les données utiles et en utilisant ces données pour contrôler le système.
 
-| Room | :------------: |[id_room] INTEGER,[room_name] text,[room_type] text)|
-| User | :------------: |[id_user] INTEGER,[user_name] text,[user_role] integer,[user_rights] integer,[user_password] text)|
+| Room |[id_room] INTEGER,[room_name] text,[room_type] text)|
+| User |[id_user] INTEGER,[user_name] text,[user_role] integer,[user_rights] integer,[user_password] text)|
 
-##Système d'authentification
+Système d'authentification
+--
 - Nous avons besoin de vérifiez que le mot de passe a un numéro, un caractère spécial, une longueur> 8.
 
 ```python
@@ -40,7 +43,8 @@ def verify_user_password(user_password):
 	return False
 ```
 
-##Salles publiques ou privées
+Salles publiques ou privées
+--
 - Room\_name doit commencer par ROOM\_ et comporter plus de 8 caractères
 
 ```python
