@@ -73,3 +73,82 @@ def verify_room_type(room_type):
 		return True
 	return False
 ```
+
+Test Unitaire
+--
+Afin de réaliser les tests unitaires, nous avons utiliser le _unittest_. En raison que les tests exécutent à l'ordre d'alphabet(ACSII). Donc nous devons bien générer les noms de la fonctions de test pour organiser notre test dans le bon ordre.
+- `test1_create_db`
+Dans cette test, nous devons assurer qu'on a bien généré les deux tableaux _Rooms_ et _Users_, et on les vérifie à l'aide de l'instruction de SQL.
+```python
+def test1_create_db(self):
+		c.execute('DROP TABLE IF EXISTS Rooms;')
+		c.execute('DROP TABLE IF EXISTS Users;')
+		create_db(db_path)
+		sql = "select * from Users;"
+		table_name = ''
+		for row in c.execute(sql).fetchall():
+			table_name = row[0]
+		self.assertEqual(table_name,'')
+
+		sql = "select * from Rooms;"
+		table_name = ''
+		for row in c.execute(sql).fetchall():
+			table_name = row[0]
+		self.assertEqual(table_name,'')
+```
+
+- `test2_verify_user_password`
+Nous savons que le mot de passe doit avoir un numéro, un caractère spécial et une longueur> 8. Donc dans cette test, on vérifie 3 fois pour assuser que seulement les mots de passe qui répondent aux exigences peuvent réussir le test.Nous donnons 3 situations : la longueur du mot de passe inférieur à 8, manque le caractère spécial et la situation correcte.
+```python
+def test2_verify_user_password(self):
+
+		self.assertFalse(verify_room_name('qwer')) # not long enough
+		self.assertFalse(verify_room_name('qwer123456')) # no special character
+
+		random_str_len = random.randint(5,10)
+
+		correct_password = ''.join(random.choice(string.ascii_lowercase) for i in range(random_str_len))
+		correct_password += '123456,'
+
+		self.assertTrue(verify_user_password(correct_password))
+```
+
+- `test3_add_user`
+Nous savons que seulement les mots de passe qui répondent aux exigences peuvent réussir d'ajouter les valeurs dans la tableau. Donc on a fait deux test.Une avec le mot de passe correcte afin de vérifier les valeurs sont bien ajoutés dans la tableau.L'autre avec le mot de passe incorrecte pour vérifier que l'on a bien refuser d'ajouter ces valeurs.
+```python
+def test3_add_user(self):
+		add_user(db_path,'yann.c',0,0,'qwer123456,')  # add a correct user
+		sql = "select user_name from Users where user_name = 'yann.c';"
+		user_name = ''
+		for row in c.execute(sql):
+			user_name = row[0]
+		self.assertEqual(user_name,'yann.c')
+
+		add_user(db_path,'huiling.b',0,0,'pass')  # add a user with wrong password format
+		sql = "select user_name from Users where user_name = 'huiling.b';"
+		name = ''
+		for row in c.execute(sql):
+			name = row[0]
+		self.assertEqual(name,'')
+```
+
+- `test4_get_users`
+Dans cette test, nous devons assurer qu'on on a bien sélectionné les valeurs souhaités dans la tableau de _Users_, et on les vérifie à l'aide de l'instruction de SQL.
+```python
+def test4_get_users(self):
+
+		self.assertEqual(get_users(db_path),['yann.c'])  # Have to be able to get the user added
+```
+
+- `test5_delete_user`
+Dans cette test, nous devons assurer qu'on a bien supprimé les valeurs souhaités dans la tableau de _Users_, et on les vérifie à l'aide de l'instruction de SQL.
+```python
+def test5_delete_user(self):
+
+		delete_user(db_path,'yann.c')
+		sql = "select user_name from Users where user_name = 'yann.c';"
+		none = ''
+		for row in c.execute(sql):
+			none = row[0]
+		self.assertEqual(none,'')  # Successful delete the user 
+```
