@@ -23,6 +23,11 @@ Afin de réaliser ce logiciel, il doit d'abord créer une base des données pour
 | User |[id_user] INTEGER|[user_name] text|[user_role] integer|[user_rights] integer|[user_password] text|
 | :------------: | :------------: | :------------: | :------------: | :------------: | :------------: |
 
+Donc la processus de contôler ce systèmes peut faciliter par les opérations de SQL.
+- Ajouter les valeur : `add_room` et `add_user`
+- Sélectionner les valeurs : `get_rooms` et `get_users`
+- Supprimer les valeurs : `delete_room` et `delete_user`
+
 Système d'authentification
 --
 - Nous avons besoin de vérifiez que le mot de passe a un numéro, un caractère spécial, une longueur> 8.
