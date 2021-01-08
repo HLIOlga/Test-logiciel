@@ -1,6 +1,6 @@
 # Quick Chart
-_**Projet de Test Logiciel
-Author : Huiling BAO & Heyang LI**_
+_**Projet de Test Logiciel**_
+_**Author : Huiling BAO & Heyang LI**_
 
 Introduction général
 --
@@ -16,8 +16,11 @@ Architecture de base des données
 --
 Afin de réaliser ce logiciel, il doit d'abord créer une base des données pour sauvegarder les données utiles et en utilisant ces données pour contrôler le système.
 
-| Room |[id_room] INTEGER,[room_name] text,[room_type] text)|
-| User |[id_user] INTEGER,[user_name] text,[user_role] integer,[user_rights] integer,[user_password] text)|
+| Room |[id_room] INTEGER|[room_name] text|[room_type] text)|
+| :------------: | :------------: | :------------: | :------------: |
+
+| User |[id_user] INTEGER|[user_name] text|[user_role] integer|[user_rights] integer|[user_password] text)|
+| :------------: | :------------: | :------------: | :------------: | :------------: | :------------: |
 
 Système d'authentification
 --
