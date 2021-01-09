@@ -133,7 +133,7 @@ def test3_add_user(self):
 ```
 
 - `test4_get_users`
-Dans cette test, nous devons assurer qu'on on a bien sélectionné les valeurs souhaités dans la tableau de _Users_, et on les vérifie à l'aide de l'instruction de SQL.
+Dans cette test, nous devons assurer qu'on on a bien sélectionné les valeurs souhaités dans la tableau de _Users_.
 ```python
 def test4_get_users(self):
 
@@ -151,4 +151,74 @@ def test5_delete_user(self):
 		for row in c.execute(sql):
 			none = row[0]
 		self.assertEqual(none,'')  # Successful delete the user 
+```
+
+- `test6_verify_room_name`
+Nous savons que Room\_name doit commencer par ROOM\_ et comporter plus de 8 caractères. Donc dans cette test, on vérifie 3 fois pour assuser que seulement Room\_name qui répondent aux exigences peuvent réussir le test.Nous donnons 3 situations : Room\_name ne commence pas par ROOM\_, la longueur de Room\_name inférieur à 8 et la situation correcte.
+```python
+def test6_verify_room_name(self):
+
+		self.assertFalse(verify_room_name('false')) 
+		self.assertFalse(verify_room_name('ROOM_')) 
+
+		random_str_len = random.randint(3,20)
+		correct_room = 'ROOM_'
+		correct_room += ''.join(random.choice(string.ascii_lowercase) for i in range(random_str_len))
+
+		self.assertTrue(verify_room_name(correct_room))
+```
+
+- `test7_verify_room_type`
+Le type de room doit définir en publiques ou privées.Donc dans cette test, on vérifie 3 fois pour assuser que seulement Room\_type qui est publiques ou privées peuvent réussir le test.Nous donnons 3 situations : Room\_type ne déclare pas, Room\_type de _public_ et Room\_type de _private_ .
+```python
+def test7_verify_room_type(self):
+		self.assertFalse(verify_room_type('false_type')) 
+		self.assertTrue(verify_room_type('public'))
+		self.assertTrue(verify_room_type('private'))
+```
+
+- `test8_add_room`
+Nous savons que seulement Room\_type qui est publiques ou privées peuvent réussir d'ajouter les valeurs dans la tableau. Donc on a fait trois test.Une avec Room\_type de _public_ et Room\_type de _private_ afin de vérifier les valeurs sont bien ajoutés dans la tableau.L'autre avec Room\_type qui est unconnu pour vérifier que l'on a bien refuser d'ajouter ces valeurs.
+```python
+def test8_add_room(self):
+
+		add_room(db_path,'ROOM_dinningroom','public') # correct room 
+		sql = "select room_name from Rooms where room_name = 'ROOM_dinningroom';"
+		for row in c.execute(sql):
+			room_name = row[0]
+		self.assertEqual(room_name,'ROOM_dinningroom')
+
+		add_room(db_path,'ROOM_bedroom','unknown') # wrong room type
+		sql = "select room_name from Rooms where room_name = 'ROOM_bedroom';"
+		res = ''
+		for row in c.execute(sql):
+			res = row[0]
+		self.assertEqual(res,'')
+
+		add_room(db_path,'ROOM_no','private') # wrong room name
+		sql = "select room_name from Rooms where room_name = 'ROOM_no';"
+		res = ''
+		for row in c.execute(sql):
+			res = row[0]
+		self.assertEqual(res,'')
+```
+
+- `test9_get_rooms`
+Dans cette test, nous devons assurer qu'on on a bien sélectionné les valeurs souhaités dans la tableau de _Rooms_.
+```python
+def test9_get_rooms(self):
+
+		self.assertEqual(get_rooms(db_path),['ROOM_dinningroom'])
+```
+
+- `test10_delete_room`
+Dans cette test, nous devons assurer qu'on a bien supprimé les valeurs souhaités dans la tableau de _Rooms_, et on les vérifie à l'aide de l'instruction de SQL.
+```python
+def test10_delete_room(self):
+		delete_room(db_path,'ROOM_dinningroom')
+		sql = "select room_name from Rooms where room_name = 'ROOM_dinningroom';"
+		none = ''
+		for row in c.execute(sql):
+			none = row[0]
+		self.assertEqual(none,'')
 ```
